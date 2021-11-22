@@ -8,7 +8,7 @@
     border-radius: 10px
 }
 
-.base {
+.header-of-task {
     display: flex;
     align-items: baseline;
 }

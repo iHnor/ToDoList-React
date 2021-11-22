@@ -1,6 +1,16 @@
 import './App.css';
+import HeaderOfTask from './components/HeaderOfTask';
 
 function App() {
+
+  const task = {
+    title: "Завдання на завтра",
+    description: "Потрібно виконати до завтрашнього дня",
+    done: false,
+    deadline: "2021-11-19",
+    id: 1
+  };
+
   return (
     <div className="App">
       <h1>TodoList</h1>
@@ -10,11 +20,7 @@ function App() {
         </div>
         <section id="tasks">
           <div className="task" id="1">
-            <div className="base">
-              <input type = 'checkbox'/>
-              <h2>Завдання на завтра</h2>
-              <h3 className="expired-date">19.11</h3>
-            </div>
+            <HeaderOfTask task={task}/>
             <div className="description-delete">
               <p>Потрібно виконати до завтрашнього дня</p>
               <button>X</button>
