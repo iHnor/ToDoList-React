@@ -4,13 +4,17 @@ class TaskForm extends Component {
 
     onSubmitHandler = (event) => {
         event.preventDefault();
+        const formData = new FormData(event.target);
+        let contact = Object.fromEntries(formData.entries())
+
         this.props.onSubmit({
-            title: "Викдик за сабмітом",
-            description: "Трішки опису",
-            done: true,
-            deadline: "2021-11-11",
+            title: contact.title,
+            description: contact.description,
+            done: false,
+            deadline: contact.deadline,
             id: 3
         })
+        event.target.reset()
     }
 
     render() {
