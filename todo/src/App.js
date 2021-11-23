@@ -1,6 +1,6 @@
 import './App.css';
 import HeaderOfTask from './components/HeaderOfTask';
-
+import DescriptDelete from './components/DescriptDelete';
 function App() {
 
   const task = {
@@ -21,10 +21,7 @@ function App() {
         <section id="tasks">
           <div className="task" id="1">
             <HeaderOfTask task={task}/>
-            <div className="description-delete">
-              <p>Потрібно виконати до завтрашнього дня</p>
-              <button>X</button>
-            </div>
+            <DescriptDelete desc ={task.description}/>
           </div>
         </section>
       </main>
