@@ -4,13 +4,12 @@ class TaskForm extends Component {
 
     onSubmitHandler = (event) => {
         event.preventDefault();
-        console.log('onSubmiteHandler');
         this.props.onSubmit({
-            title: "Завдання з описом",
-            description: "Трішки опису до завдання",
+            title: "Викдик за сабмітом",
+            description: "Трішки опису",
             done: true,
-            deadline: "2021-11-09",
-            id: 2
+            deadline: "2021-11-11",
+            id: 3
         })
     }
 
