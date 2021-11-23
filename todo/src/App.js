@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './App.css';
+import LeftBar from './components/LeftBar';
 import TaskForm from './components/TaskForm';
 import Tasks from './components/Tasks';
 
@@ -19,7 +20,7 @@ class App extends Component {
         done: true,
         deadline: "2021-11-09",
         id: 2
-      }
+      } 
     ]
   }
   
@@ -35,9 +36,7 @@ class App extends Component {
       <div className="App">
         <h1>TodoList</h1>
         <main>
-          <div className="menu">
-            <button id="done-button">Скрыть выполененые</button> {/*onclick="showOnlyUndone(this)" */}
-          </div>
+          <LeftBar />
           <Tasks task={this.state.tasks} />
         </main>
         <footer>
