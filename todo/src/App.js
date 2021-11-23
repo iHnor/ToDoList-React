@@ -1,8 +1,9 @@
 import './App.css';
+import TaskForm from './components/TaskForm';
 import Tasks from './components/Tasks';
 function App() {
-
-  const task = [
+  
+  const tasks = [
     {
       title: "Завдання на завтра",
       description: "Потрібно виконати до завтрашнього дня",
@@ -19,23 +20,23 @@ function App() {
     }
   ]
 
+  const addNewTask = (task) => {
+    console.log(task);
+    this.tasks.push(task);
+  }
+
   return (
     <div className="App">
       <h1>TodoList</h1>
       <main>
         <div className="menu">
-          <button id="done-button" onclick="showOnlyUndone(this)">Скрыть выполененые</button>
+           <button id="done-button">Скрыть выполененые</button> {/*onclick="showOnlyUndone(this)" */}
         </div>
-        <Tasks task={task} />
+        <Tasks task={tasks} />
       </main>
       <footer>
-        <form name="task">
-            <input type="text" name="title" placeholder="Title"/>
-            <input type="text" name="description" placeholder="Description"/>
-            <input type="date" name="deadline" placeholder="Date"/>
-            <button type="submit">Add</button>
-        </form>
-    </footer>
+        <TaskForm onSubmit={addNewTask} />
+      </footer>
     </div>
   );
 }
