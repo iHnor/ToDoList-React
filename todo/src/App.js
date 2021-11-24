@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import './App.css';
 import LeftBar from './components/LeftBar';
 import TaskForm from './components/TaskForm';
 import Tasks from './components/Tasks';
 
-class App extends Component {
-  state = {
-    tasks: [
+function App() {
+ 
+  let initialTasks = [
       {
         title: "Завдання на завтра",
         description: "Потрібно виконати до завтрашнього дня",
@@ -25,10 +25,7 @@ class App extends Component {
   }
   
 
-  addNewTask = (task) => {
-    this.setState({
-      tasks:[...this.state.tasks, task]
-    })
+  const [tasks, setTasks] = useState(initialTasks)
   }
 
   render() {
