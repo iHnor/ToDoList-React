@@ -22,6 +22,7 @@ h1 {
 
 button {
   cursor: pointer;
+  width: 170px;
   transition-duration: 0.4s;
   border: 1px solid rgb(138, 138, 138);
   border-radius: 5px;

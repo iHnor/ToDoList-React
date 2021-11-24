@@ -29,8 +29,23 @@ function App() {
     click: false
   }
 
-  const [tasks, setTasks] = useState(initialTasks)
-  const [showHide, setShowHide] = useState(showHideTasks)
+  let initialList = {
+    activeList: {},
+    lists: [
+      {
+        id: 1,
+        title: "First List"
+      },
+      {
+        id: 2,
+        title: "Second List"
+      }
+    ]
+  }
+
+  const [tasks, setTasks] = useState(initialTasks);
+  const [showHide, setShowHide] = useState(showHideTasks);
+  const [lists, setLists] = useState(initialList);
 
   function addNewTask(newTask) {
     setTasks([...tasks, newTask])
@@ -55,11 +70,12 @@ function App() {
     <div className="App">
       <h1>TodoList</h1>
       <main>
-        <LeftBar showHide={showHide} clickShowOnlyUndone={clickShowOnlyUndone} />
+        <LeftBar showHide={showHide} clickShowOnlyUndone={clickShowOnlyUndone} lists={lists.lists} />
         <Tasks
           task={tasks}
           onDelete={deleteTask}
           clickCheckBox={clickCheckBox}
+          showHide={showHide.click}
         />
       </main>
       <footer>
