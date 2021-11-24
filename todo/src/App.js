@@ -18,7 +18,7 @@ function App() {
       title: "Завдання з описом",
       description: "Трішки опису до завдання",
       done: true,
-      deadline: "2021-11-09",
+      deadline: "2021-11-25",
       id: 2
     }
   ]
@@ -33,13 +33,22 @@ function App() {
   function deleteTask(task) {
     setTasks(tasks.filter(t => t !== task));
   }
+  function clickCheckBox (task){
+    task.done = !task.done
+    let tmp = tasks.map(t => t === task ? task : t);
+    setTasks(tmp)
+  }
 
   return (
     <div className="App">
       <h1>TodoList</h1>
       <main>
         <LeftBar />
-        <Tasks task={tasks} onDelete={deleteTask} />
+        <Tasks 
+          task={tasks} 
+          onDelete={deleteTask} 
+          clickCheckBox={clickCheckBox}
+        />
       </main>
       <footer>
         <TaskForm onSubmit={addNewTask} />

@@ -2,11 +2,11 @@ import React from 'react'
 
 import Task from './Task';
 
-const Tasks = ({task, onDelete}) => {
+const Tasks = ({task, onDelete, clickCheckBox}) => {
     return (
         <section id="tasks">
             {
-                task.map((t, id) => <Task key={id} task={t} onDelete={onDelete} />)
+                task.map((t, id) => <Task key={id} task={t} onDelete={onDelete} clickCheckBox={clickCheckBox}/>)
             }
         </section>
     )
