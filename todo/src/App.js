@@ -23,9 +23,14 @@ function App() {
     }
   ]
 
-
+  let showHideTasks =
+  {
+    title: "Сховати виконані",
+    click: false
+  }
 
   const [tasks, setTasks] = useState(initialTasks)
+  const [showHide, setShowHide] = useState(showHideTasks)
 
   function addNewTask(newTask) {
     setTasks([...tasks, newTask])
@@ -33,20 +38,27 @@ function App() {
   function deleteTask(task) {
     setTasks(tasks.filter(t => t !== task));
   }
-  function clickCheckBox (task){
+  function clickCheckBox(task) {
     task.done = !task.done
     let tmp = tasks.map(t => t === task ? task : t);
     setTasks(tmp)
+  }
+
+  function clickShowOnlyUndone(clickButton) {
+    clickButton.title = clickButton.title === "Сховати виконані" ? "Показати всі" : "Сховати виконані";
+    clickButton.click = !clickButton.click;
+    setShowHide(clickButton);
+    setTasks(tasks.slice(0))
   }
 
   return (
     <div className="App">
       <h1>TodoList</h1>
       <main>
-        <LeftBar />
-        <Tasks 
-          task={tasks} 
-          onDelete={deleteTask} 
+        <LeftBar showHide={showHide} clickShowOnlyUndone={clickShowOnlyUndone} />
+        <Tasks
+          task={tasks}
+          onDelete={deleteTask}
           clickCheckBox={clickCheckBox}
         />
       </main>

@@ -1,9 +1,9 @@
 import React from "react";
 
-const LeftBar = () => {
+const LeftBar = ({showHide, clickShowOnlyUndone}) => {
     return (
         <div className="menu">
-            <button id="done-button">Скрыть выполененые</button> {/*onclick="showOnlyUndone(this)" */}
+            <button id="done-button" onClick = {() => clickShowOnlyUndone(showHide)}>{showHide.title}</button> {/*onclick="showOnlyUndone(this)" */}
         </div>
     )
 }
