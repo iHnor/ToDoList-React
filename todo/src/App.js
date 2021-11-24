@@ -22,10 +22,14 @@ function App() {
         id: 2
       } 
     ]
-  }
+  
   
 
   const [tasks, setTasks] = useState(initialTasks)
+
+  function addNewTask(newTask) {
+    setTasks([...tasks, newTask])
+  }
   }
 
   render() {
@@ -37,7 +41,7 @@ function App() {
           <Tasks task={this.state.tasks} />
         </main>
         <footer>
-          <TaskForm onSubmit={this.addNewTask} />
+          <TaskForm onSubmit={addNewTask} />
         </footer>
       </div>
     );
