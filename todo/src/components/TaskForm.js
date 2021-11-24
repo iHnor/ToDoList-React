@@ -6,13 +6,13 @@ class TaskForm extends Component {
         event.preventDefault();
         const formData = new FormData(event.target);
         let contact = Object.fromEntries(formData.entries())
-
         this.props.onSubmit({
             title: contact.title,
             description: contact.description,
             done: false,
             deadline: contact.deadline,
-            id: 3
+            id: 3,
+            list: this.props.activeId
         })
         event.target.reset()
     }

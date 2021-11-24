@@ -12,14 +12,16 @@ function App() {
       description: "Потрібно виконати до завтрашнього дня",
       done: false,
       deadline: "2021-11-19",
-      id: 1
+      id: 1,
+      list: 1
     },
     {
       title: "Завдання з описом",
       description: "Трішки опису до завдання",
       done: true,
       deadline: "2021-11-25",
-      id: 2
+      id: 2,
+      list: 2
     }
   ]
 
@@ -30,12 +32,16 @@ function App() {
   }
 
   let initialList = {
-    activeList: null,
+    activeList: {
+      id: 1,
+      title: "First List",
+      active: true
+    },
     lists: [
       {
         id: 1,
         title: "First List",
-        active: false
+        active: true
       },
       {
         id: 2,
@@ -53,7 +59,7 @@ function App() {
   const [tasks, setTasks] = useState(initialTasks);
   const [showHide, setShowHide] = useState(showHideTasks);
   const [listsState, setLists] = useState(initialList);
-
+  
   function addNewTask(newTask) {
     setTasks([...tasks, newTask])
   }
@@ -102,7 +108,7 @@ function App() {
         />
       </main>
       <footer>
-        <TaskForm onSubmit={addNewTask} />
+        <TaskForm onSubmit={addNewTask} activeId={listsState.activeList.id} />
       </footer>
     </div>
   );
