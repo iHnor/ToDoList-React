@@ -1,12 +1,13 @@
 import React from "react";
 import List from "./List";
 
-const LeftBar = ({showHide, clickShowOnlyUndone, lists}) => {
+const LeftBar = ({ showHide, clickShowOnlyUndone, lists, clickOnList }) => {
     return (
         <div className="menu">
-            <button id="done-button" className="disabled" onClick = {() => clickShowOnlyUndone(showHide)}>{showHide.title}</button> 
+            <button id="done-button" onClick={() => clickShowOnlyUndone(showHide)}>{showHide.title}</button>
+            <h3>Списки</h3>
             {
-                lists.map((l, id) => <List key={id} list={l}/>)
+                lists.map((l, id) => <List list={l} clickOnList={clickOnList} key={id}/>)
             }
         </div>
 

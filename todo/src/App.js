@@ -30,22 +30,29 @@ function App() {
   }
 
   let initialList = {
-    activeList: {},
+    activeList: null,
     lists: [
       {
         id: 1,
-        title: "First List"
+        title: "First List",
+        active: false
       },
       {
         id: 2,
-        title: "Second List"
+        title: "Second List",
+        active: false
+      },
+      {
+        id: 3,
+        title: "Third List",
+        active: false
       }
     ]
   }
 
   const [tasks, setTasks] = useState(initialTasks);
   const [showHide, setShowHide] = useState(showHideTasks);
-  const [lists, setLists] = useState(initialList);
+  const [listsState, setLists] = useState(initialList);
 
   function addNewTask(newTask) {
     setTasks([...tasks, newTask])
@@ -55,14 +62,25 @@ function App() {
   }
   function clickCheckBox(task) {
     task.done = !task.done
-    let tmp = tasks.map(t => t === task ? task : t);
-    setTasks(tmp)
+    let changeTask = tasks.map(t => t === task ? task : t);
+    setTasks(changeTask)
   }
-
   function clickShowOnlyUndone(clickButton) {
     clickButton.title = clickButton.title === "Сховати виконані" ? "Показати всі" : "Сховати виконані";
     clickButton.click = !clickButton.click;
     setShowHide(clickButton);
+    setTasks(tasks.slice(0))
+  }
+  function clickOnList(clickList) {
+    clickList.active = !clickList.active;
+    if (listsState.activeList) {
+      listsState.activeList.active = !listsState.activeList.active;
+      listsState.lists = listsState.lists.map(l => l.id === listsState.activeList.id ? listsState.activeList : l);
+
+    }
+    listsState.activeList = clickList;
+    listsState.lists = listsState.lists.map(l => l.id === clickList.id ? clickList : l);
+    setLists(listsState)
     setTasks(tasks.slice(0))
   }
 
@@ -70,7 +88,12 @@ function App() {
     <div className="App">
       <h1>TodoList</h1>
       <main>
-        <LeftBar showHide={showHide} clickShowOnlyUndone={clickShowOnlyUndone} lists={lists.lists} />
+        <LeftBar
+          showHide={showHide}
+          clickShowOnlyUndone={clickShowOnlyUndone}
+          lists={listsState.lists}
+          clickOnList={clickOnList}
+        />
         <Tasks
           task={tasks}
           onDelete={deleteTask}
