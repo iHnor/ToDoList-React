@@ -2,12 +2,12 @@ import React from 'react'
 
 import Task from './Task';
 
-const Tasks = (props) => {
+const Tasks = ({task, onDelete}) => {
     return (
         <section id="tasks">
             {
-                props.task.map((t,id) => <Task key={id} task={t}/>)
-            }                     
+                task.map((t, id) => <Task key={id} task={t} onDelete={onDelete} />)
+            }
         </section>
     )
 }

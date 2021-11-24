@@ -1,10 +1,10 @@
 import React from "react"
 
-const DescriptDelete = ({desc}) => {
+const DescriptDelete = ({task, onDelete}) => {
     return (
         <div className="description-delete">
-            <p>{desc}</p>
-            <button>X</button>
+            <p>{task.description}</p>
+            <button onClick={() =>onDelete(task)}>X</button>
         </div>
     )
 }
