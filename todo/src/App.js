@@ -27,6 +27,13 @@ function App() {
   }
   const [showHide, setShowHide] = useState(showHideTasks);
 
+  function showTasksInList() {
+    let getActiveList = listsState.find(l => l.active);
+    fetch(taskInDB)
+      .then(response => response.json())
+      .then(res => setTasks(res.filter(t => t.list === getActiveList.id)))
+  }
+
   function addToDB(newTask) {
     return fetch(taskInDB, {
       method: "POST",
@@ -66,8 +73,10 @@ function App() {
   }
   function clickOnList(clickList) {
     let activeList = listsState.find(l => l.active);
+    if (activeList)
     activeList.active = !activeList.active;
     clickList.active = !clickList.active;
+    showTasksInList();
     setLists(listsState)
     setTasks(tasksState.slice(0))
   }
