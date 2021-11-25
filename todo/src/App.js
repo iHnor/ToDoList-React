@@ -64,13 +64,12 @@ function App() {
     setTasks(tasks.slice(0))
   }
   function clickOnList(clickList) {
-    let tmp = listsState.find(l => l.active);
-    tmp.active = !tmp.active;
+    let activeList = listsState.find(l => l.active);
+    activeList.active = !activeList.active;
     clickList.active = !clickList.active;
     setLists(listsState)
-    setTasks(tasks.slice(0))
+    setTasks(tasksState.slice(0))
   }
-
   return (
     <div className="App">
       <h1>TodoList</h1>
@@ -82,14 +81,14 @@ function App() {
           clickOnList={clickOnList}
         />
         <Tasks
-          task={tasks}
+          task={tasksState}
           onDelete={deleteTask}
           clickCheckBox={clickCheckBox}
           showHide={showHide.click}
         />
       </main>
       <footer>
-        <TaskForm onSubmit={addNewTask} lists={listsState} />
+        <TaskForm onSubmit={addToDB} lists={listsState} />
       </footer>
     </div>
   );
