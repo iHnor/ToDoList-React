@@ -43,6 +43,7 @@ function App() {
       body: JSON.stringify(newTask)
     })
       .then(response => response.json())
+      .then(res => addToState(res))
   }
   function deleteFromDB(task) {
     fetch(taskInDB + '/' + task.id, {
@@ -51,9 +52,19 @@ function App() {
       .then(response => response.json())
   }
 
-  function addNewTask(newTask) {
-    addToDB(newTask)
-    setTasks([...tasks, newTask])
+  function changeInDB(id, done) {
+    fetch(taskInDB + '/' + id, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({done})
+    })
+      .then(response => response.json())
+  }
+
+  function addToState(newTask) {
+    setTasks([...tasksState, newTask])
   }
   function deleteTask(task) {
     deleteFromDB(task);
@@ -61,7 +72,8 @@ function App() {
   }
   function clickCheckBox(task) {
     task.done = !task.done
-    let changeTask = tasks.map(t => t === task ? task : t);
+    let changeTask = tasksState.map(t => t.id === task.id ? task : t);
+    changeInDB(task.id, task.done);
     setTasks(changeTask)
   }
   function clickShowOnlyUndone(clickButton) {
@@ -74,7 +86,7 @@ function App() {
   function clickOnList(clickList) {
     let activeList = listsState.find(l => l.active);
     if (activeList)
-    activeList.active = !activeList.active;
+      activeList.active = !activeList.active;
     clickList.active = !clickList.active;
     showTasksInList();
     setLists(listsState)
