@@ -103,7 +103,7 @@ function App() {
         />
       </main>
       <footer>
-        <TaskForm onSubmit={addNewTask} lists={listsState.activeList.id} />
+        <TaskForm onSubmit={addNewTask} lists={listsState.lists} />
       </footer>
     </div>
   );
