@@ -5,17 +5,17 @@ import TaskForm from './components/TaskForm';
 import Tasks from './components/Tasks';
 
 function App() {
-  const [tasks, setTasks] = useState([]);
+  const [tasksState, setTasks] = useState([]);
   const [listsState, setLists] = useState([]);
 
-  const getTaskFromDB = "http://localhost:3000/tasks";
-  const getListFromDB = "http://localhost:3000/lists";
+  const taskInDB = "http://localhost:3000/tasks";
+  const listInDB = "http://localhost:3000/lists";
 
   useEffect(() => {
-    fetch(getTaskFromDB)
+    fetch(taskInDB)
       .then(response => response.json())
       .then(res => setTasks(res))
-    fetch(getListFromDB)
+    fetch(listInDB)
       .then(response => response.json())
       .then(res => setLists(res))
   }, [])
@@ -28,7 +28,7 @@ function App() {
   const [showHide, setShowHide] = useState(showHideTasks);
 
   function addToDB(newTask) {
-    fetch(getTaskFromDB, {
+    return fetch(taskInDB, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'
@@ -37,8 +37,8 @@ function App() {
     })
       .then(response => response.json())
   }
-  function deleteFromDB(id) {
-    fetch(getTaskFromDB + '/' +id, {
+  function deleteFromDB(task) {
+    fetch(taskInDB + '/' + task.id, {
       method: 'DELETE'
     })
       .then(response => response.json())
@@ -49,8 +49,8 @@ function App() {
     setTasks([...tasks, newTask])
   }
   function deleteTask(task) {
-    deleteFromDB(task.id);
-    setTasks(tasks.filter(t => t !== task));
+    deleteFromDB(task);
+    setTasks(tasksState.filter(t => t !== task));
   }
   function clickCheckBox(task) {
     task.done = !task.done
@@ -58,10 +58,11 @@ function App() {
     setTasks(changeTask)
   }
   function clickShowOnlyUndone(clickButton) {
+
     clickButton.title = clickButton.title === "Сховати виконані" ? "Показати всі" : "Сховати виконані";
     clickButton.click = !clickButton.click;
     setShowHide(clickButton);
-    setTasks(tasks.slice(0))
+    setTasks(tasksState.slice(0))
   }
   function clickOnList(clickList) {
     let activeList = listsState.find(l => l.active);
