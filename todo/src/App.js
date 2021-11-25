@@ -8,15 +8,16 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [listsState, setLists] = useState([]);
 
+  const getTaskFromDB = "http://localhost:3000/tasks";
+  const getListFromDB = "http://localhost:3000/lists";
+
   useEffect(() => {
-    const getTaskFromDB = "http://localhost:3000/tasks";
-    const getListFromDB = "http://localhost:3000/lists";
     fetch(getTaskFromDB)
       .then(response => response.json())
       .then(res => setTasks(res))
     fetch(getListFromDB)
       .then(response => response.json())
-      .then(res => setLists(res))  
+      .then(res => setLists(res))
   }, [])
 
   let showHideTasks =
@@ -24,13 +25,31 @@ function App() {
     title: "Сховати виконані",
     click: false
   }
-
   const [showHide, setShowHide] = useState(showHideTasks);
 
+  function addToDB(newTask) {
+    fetch(getTaskFromDB, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newTask)
+    })
+      .then(response => response.json())
+  }
+  function deleteFromDB(id) {
+    fetch(getTaskFromDB + '/' +id, {
+      method: 'DELETE'
+    })
+      .then(response => response.json())
+  }
+
   function addNewTask(newTask) {
+    addToDB(newTask)
     setTasks([...tasks, newTask])
   }
   function deleteTask(task) {
+    deleteFromDB(task.id);
     setTasks(tasks.filter(t => t !== task));
   }
   function clickCheckBox(task) {
