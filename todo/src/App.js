@@ -3,6 +3,7 @@ import './App.css';
 import LeftBar from './components/LeftBar';
 import TaskForm from './components/TaskForm';
 import Tasks from './components/Tasks';
+import { Link } from 'react-router-dom';
 
 function App() {
   const [tasksState, setTasks] = useState([]);
