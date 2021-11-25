@@ -78,14 +78,9 @@ function App() {
     setTasks(tasks.slice(0))
   }
   function clickOnList(clickList) {
+    let tmp = listsState.lists.find(l => l.active);
+    tmp.active = !tmp.active;
     clickList.active = !clickList.active;
-    if (listsState.activeList) {
-      listsState.activeList.active = !listsState.activeList.active;
-      listsState.lists = listsState.lists.map(l => l.id === listsState.activeList.id ? listsState.activeList : l);
-
-    }
-    listsState.activeList = clickList;
-    listsState.lists = listsState.lists.map(l => l.id === clickList.id ? clickList : l);
     setLists(listsState)
     setTasks(tasks.slice(0))
   }
@@ -108,7 +103,7 @@ function App() {
         />
       </main>
       <footer>
-        <TaskForm onSubmit={addNewTask} activeId={listsState.activeList.id} />
+        <TaskForm onSubmit={addNewTask} lists={listsState.activeList.id} />
       </footer>
     </div>
   );
