@@ -1,29 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './App.css';
 import LeftBar from './components/LeftBar';
 import TaskForm from './components/TaskForm';
 import Tasks from './components/Tasks';
 
 function App() {
+  const [tasks, setTasks] = useState([]);
+  const [listsState, setLists] = useState([]);
 
-  let initialTasks = [
-    {
-      title: "Завдання на завтра",
-      description: "Потрібно виконати до завтрашнього дня",
-      done: false,
-      deadline: "2021-11-19",
-      id: 1,
-      list: 1
-    },
-    {
-      title: "Завдання з описом",
-      description: "Трішки опису до завдання",
-      done: true,
-      deadline: "2021-11-25",
-      id: 2,
-      list: 2
-    }
-  ]
+  useEffect(() => {
+    const getTaskFromDB = "http://localhost:3000/tasks";
+    const getListFromDB = "http://localhost:3000/lists";
+    fetch(getTaskFromDB)
+      .then(response => response.json())
+      .then(res => setTasks(res))
+    fetch(getListFromDB)
+      .then(response => response.json())
+      .then(res => setLists(res))  
+  }, [])
 
   let showHideTasks =
   {
@@ -31,35 +25,8 @@ function App() {
     click: false
   }
 
-  let initialList = {
-    activeList: {
-      id: 1,
-      title: "First List",
-      active: true
-    },
-    lists: [
-      {
-        id: 1,
-        title: "First List",
-        active: true
-      },
-      {
-        id: 2,
-        title: "Second List",
-        active: false
-      },
-      {
-        id: 3,
-        title: "Third List",
-        active: false
-      }
-    ]
-  }
-
-  const [tasks, setTasks] = useState(initialTasks);
   const [showHide, setShowHide] = useState(showHideTasks);
-  const [listsState, setLists] = useState(initialList);
-  
+
   function addNewTask(newTask) {
     setTasks([...tasks, newTask])
   }
@@ -78,7 +45,7 @@ function App() {
     setTasks(tasks.slice(0))
   }
   function clickOnList(clickList) {
-    let tmp = listsState.lists.find(l => l.active);
+    let tmp = listsState.find(l => l.active);
     tmp.active = !tmp.active;
     clickList.active = !clickList.active;
     setLists(listsState)
@@ -92,7 +59,7 @@ function App() {
         <LeftBar
           showHide={showHide}
           clickShowOnlyUndone={clickShowOnlyUndone}
-          lists={listsState.lists}
+          lists={listsState}
           clickOnList={clickOnList}
         />
         <Tasks
@@ -103,7 +70,7 @@ function App() {
         />
       </main>
       <footer>
-        <TaskForm onSubmit={addNewTask} lists={listsState.lists} />
+        <TaskForm onSubmit={addNewTask} lists={listsState} />
       </footer>
     </div>
   );
