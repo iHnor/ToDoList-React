@@ -3,6 +3,7 @@ import './App.css';
 import LeftBar from './components/LeftBar';
 import TaskForm from './components/TaskForm';
 import Tasks from './components/Tasks';
+import { Link } from 'react-router-dom';
 
 function App() {
   const [tasksState, setTasks] = useState([]);
@@ -20,7 +21,7 @@ function App() {
       .then(res => setLists(res))
   }, [])
 
-  const showHideTasks =
+  let showHideTasks =
   {
     title: "Сховати виконані",
     click: false
@@ -58,7 +59,7 @@ function App() {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ done })
+      body: JSON.stringify({done})
     })
       .then(response => response.json())
   }
@@ -92,20 +93,6 @@ function App() {
     setLists(listsState)
     setTasks(tasksState.slice(0))
   }
-
-  function clickToday() {
-    let activeList = listsState.find(l => l.active);
-    if (activeList)
-      activeList.active = !activeList.active;
-    showTodayTasks();
-  }
-
-  function showTodayTasks() {
-    fetch(taskInDB)
-      .then(response => response.json())
-      .then(res => setTasks(res.filter(t => new Date(t.deadline).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0))))
-  }
-
   return (
     <div className="App">
       <h1>TodoList</h1>
@@ -115,7 +102,6 @@ function App() {
           clickShowOnlyUndone={clickShowOnlyUndone}
           lists={listsState}
           clickOnList={clickOnList}
-          clickToday={clickToday}
         />
         <Tasks
           task={tasksState}
