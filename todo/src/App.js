@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import './App.css';
+import TaskListPage from './components/TaskListPage'
 import LeftBar from './components/LeftBar';
-import TaskForm from './components/TaskForm';
-import Tasks from './components/Tasks';
+import TodayTasksPage from './todayTasks/TodayTasksPage'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
 
 function App() {
-  const [tasksState, setTasks] = useState([]);
   const [listsState, setLists] = useState([]);
-
-  const taskInDB = "http://localhost:3000/tasks";
   const listInDB = "http://localhost:3000/lists";
 
   useEffect(() => {
-    fetch(taskInDB)
-      .then(response => response.json())
-      .then(res => setTasks(res))
     fetch(listInDB)
       .then(response => response.json())
       .then(res => setLists(res))
@@ -27,107 +26,57 @@ function App() {
   }
   const [showHide, setShowHide] = useState(showHideTasks);
 
-  function showTasksInList() {
-    let getActiveList = listsState.find(l => l.active);
-    fetch(taskInDB)
-      .then(response => response.json())
-      .then(res => setTasks(res.filter(t => t.list === getActiveList.id)))
-  }
-
-  function addToDB(newTask) {
-    return fetch(taskInDB, {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newTask)
-    })
-      .then(response => response.json())
-      .then(res => addToState(res))
-  }
-  function deleteFromDB(task) {
-    fetch(taskInDB + '/' + task.id, {
-      method: 'DELETE'
-    })
-      .then(response => response.json())
-  }
-
-  function changeInDB(id, done) {
-    fetch(taskInDB + '/' + id, {
+  function changeInDB(id, active) {
+    fetch(listInDB + '/' + id, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ done })
+      body: JSON.stringify({ active })
     })
       .then(response => response.json())
   }
 
-  function addToState(newTask) {
-    setTasks([...tasksState, newTask])
-  }
-  function deleteTask(task) {
-    deleteFromDB(task);
-    setTasks(tasksState.filter(t => t !== task));
-  }
-  function clickCheckBox(task) {
-    task.done = !task.done
-    let changeTask = tasksState.map(t => t.id === task.id ? task : t);
-    changeInDB(task.id, task.done);
-    setTasks(changeTask)
-  }
   function clickShowOnlyUndone(clickButton) {
-
     clickButton.title = clickButton.title === "Сховати виконані" ? "Показати всі" : "Сховати виконані";
     clickButton.click = !clickButton.click;
     setShowHide(clickButton);
-    setTasks(tasksState.slice(0))
+    setLists(listsState.slice(0))
   }
+
   function clickOnList(clickList) {
     let activeList = listsState.find(l => l.active);
-    if (activeList)
+    if (activeList) {
       activeList.active = !activeList.active;
+      listsState.map(l => l.id === activeList.id ? activeList : l)
+      changeInDB(activeList.id, activeList.active)
+    }
     clickList.active = !clickList.active;
-    showTasksInList();
+    listsState.map(l => l.id === clickList.id ? clickList : l)
+    changeInDB(clickList.id, clickList.active)
     setLists(listsState)
-    setTasks(tasksState.slice(0))
-  }
-
-  function clickToday() {
-    let activeList = listsState.find(l => l.active);
-    if (activeList)
-      activeList.active = !activeList.active;
-    showTodayTasks();
-  }
-
-  function showTodayTasks() {
-    fetch(taskInDB)
-      .then(response => response.json())
-      .then(res => setTasks(res.filter(t => new Date(t.deadline).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0))))
   }
 
   return (
-    <div className="App">
-      <h1>TodoList</h1>
-      <main>
-        <LeftBar
-          showHide={showHide}
-          clickShowOnlyUndone={clickShowOnlyUndone}
-          lists={listsState}
-          clickOnList={clickOnList}
-          clickToday={clickToday}
-        />
-        <Tasks
-          task={tasksState}
-          onDelete={deleteTask}
-          clickCheckBox={clickCheckBox}
-          showHide={showHide.click}
-        />
-      </main>
-      <footer>
-        <TaskForm onSubmit={addToDB} lists={listsState} />
-      </footer>
-    </div>
+    <Router>
+      <div className="App">
+        <h1>TodoList</h1>
+        <main className={showHide.click ? "hide-done" : ""}>
+          <LeftBar
+            showHide={showHide}
+            clickShowOnlyUndone={clickShowOnlyUndone}
+            lists={listsState}
+            clickOnList={clickOnList}
+            // clickToday={clickToday}
+          />
+          <Routes>
+            <Route path="todo-list/:id" element={<TaskListPage />} />
+            <Route path="/today" element={<TodayTasksPage />} />
+          </Routes>
+        </main>
+
+      </div>
+    </Router>
   );
 
 }

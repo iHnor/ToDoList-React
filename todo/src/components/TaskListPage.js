@@ -1,39 +1,21 @@
 import React, { useState, useEffect } from 'react'
-import './App.css';
-import LeftBar from './components/LeftBar';
-import TaskForm from './components/TaskForm';
-import Tasks from './components/Tasks';
-import { Link } from 'react-router-dom';
+import { useParams } from 'react-router';
+import TaskForm from './TaskForm';
+import Tasks from './Tasks';
 
-function App() {
+function TaskListPage() {
   const [tasksState, setTasks] = useState([]);
-  const [listsState, setLists] = useState([]);
-
+  const activeList = useParams();
+  console.log(activeList);
   const taskInDB = "http://localhost:3000/tasks";
-  const listInDB = "http://localhost:3000/lists";
 
   useEffect(() => {
     fetch(taskInDB)
       .then(response => response.json())
-      .then(res => setTasks(res))
-    fetch(listInDB)
-      .then(response => response.json())
-      .then(res => setLists(res))
-  }, [])
+      .then(res => setTasks(res.filter(r => r.list === Number(activeList.id))))
 
-  let showHideTasks =
-  {
-    title: "Сховати виконані",
-    click: false
-  }
-  const [showHide, setShowHide] = useState(showHideTasks);
+  }, [activeList.id])
 
-  function showTasksInList() {
-    let getActiveList = listsState.find(l => l.active);
-    fetch(taskInDB)
-      .then(response => response.json())
-      .then(res => setTasks(res.filter(t => t.list === getActiveList.id)))
-  }
 
   function addToDB(newTask) {
     return fetch(taskInDB, {
@@ -59,7 +41,7 @@ function App() {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({done})
+      body: JSON.stringify({ done })
     })
       .then(response => response.json())
   }
@@ -77,45 +59,22 @@ function App() {
     changeInDB(task.id, task.done);
     setTasks(changeTask)
   }
-  function clickShowOnlyUndone(clickButton) {
 
-    clickButton.title = clickButton.title === "Сховати виконані" ? "Показати всі" : "Сховати виконані";
-    clickButton.click = !clickButton.click;
-    setShowHide(clickButton);
-    setTasks(tasksState.slice(0))
-  }
-  function clickOnList(clickList) {
-    let activeList = listsState.find(l => l.active);
-    if (activeList)
-      activeList.active = !activeList.active;
-    clickList.active = !clickList.active;
-    showTasksInList();
-    setLists(listsState)
-    setTasks(tasksState.slice(0))
-  }
   return (
-    <div className="App">
-      <h1>TodoList</h1>
-      <main>
-        <LeftBar
-          showHide={showHide}
-          clickShowOnlyUndone={clickShowOnlyUndone}
-          lists={listsState}
-          clickOnList={clickOnList}
-        />
-        <Tasks
-          task={tasksState}
-          onDelete={deleteTask}
-          clickCheckBox={clickCheckBox}
-          showHide={showHide.click}
-        />
-      </main>
-      <footer>
-        <TaskForm onSubmit={addToDB} lists={listsState} />
-      </footer>
+
+    <div>
+      <Tasks
+        task={tasksState}
+        onDelete={deleteTask}
+        clickCheckBox={clickCheckBox}
+      />
+      <div className="footer">
+        <TaskForm onSubmit={addToDB} lists={activeList} />
+      </div>
     </div>
+    
   );
 
 }
 
-export default App;
+export default TaskListPage;

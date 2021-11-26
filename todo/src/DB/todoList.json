@@ -19,10 +19,34 @@
     {
       "title": "Завдання на сьогодні ",
       "description": "",
-      "done": false,
+      "done": true,
       "deadline": "2021-11-26",
       "list": 1,
       "id": 3
+    },
+    {
+      "title": "Second List",
+      "description": "New description",
+      "done": false,
+      "deadline": "2021-11-17",
+      "list": 2,
+      "id": 5
+    },
+    {
+      "title": "New Today task",
+      "description": "add new description",
+      "done": false,
+      "deadline": "2021-11-26",
+      "list": 2,
+      "id": 6
+    },
+    {
+      "title": "One task for third list",
+      "description": "",
+      "done": false,
+      "deadline": "",
+      "list": 3,
+      "id": 7
     }
   ],
   "lists": [
@@ -39,7 +63,7 @@
     {
       "id": 3,
       "title": "Third List",
-      "active": false
+      "active": true
     }
   ]
 }

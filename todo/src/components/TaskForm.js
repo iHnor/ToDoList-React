@@ -7,14 +7,12 @@ class TaskForm extends Component {
         const formData = new FormData(event.target);
         let contact = Object.fromEntries(formData.entries())
 
-        let getActiveList = this.props.lists.find(l => l.active);
-        console.log(getActiveList);
         this.props.onSubmit({
             title: contact.title,
             description: contact.description,
             done: false,
             deadline: contact.deadline,
-            list: getActiveList.id
+            list: Number(this.props.lists.id)
         })
         event.target.reset()
     }
