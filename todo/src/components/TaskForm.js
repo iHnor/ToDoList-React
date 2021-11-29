@@ -11,8 +11,8 @@ class TaskForm extends Component {
             title: contact.title,
             description: contact.description,
             done: false,
-            deadline: contact.deadline,
-            list: Number(this.props.lists.id)
+            duedate: new Date(contact.deadline),
+            todoListId: Number(this.props.lists.id)
         })
         event.target.reset()
     }

@@ -7,7 +7,7 @@ const Tasks = ({showHide, clickShowOnlyUndone, task, onDelete, onToggle}) => {
         <section id="tasks">
             <button id="hide-show" onClick={() => clickShowOnlyUndone(showHide)}>{showHide.title}</button>
             {
-                task.map((t, id) => <Task key={id} task={t} onDelete={onDelete} onToggle={onToggle}/>)
+                task.map((t, id) => <Task key={id} task={t} onDelete={onDelete} onToggle={onToggle} />)
             }
         </section>
     )

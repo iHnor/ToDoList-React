@@ -18,7 +18,6 @@ function App() {
       .then(response => response.json())
       .then(res => setLists(res))
   }, [])
-
   // const showHideTasks =
   // {
   //   title: "Сховати виконані",

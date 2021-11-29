@@ -2,8 +2,10 @@ import React from "react";
 
 function formatDate(deadline) {
     if (deadline) {
-        let date = deadline.split('-');
-        return `${date[2]}.${date[1]}`;
+        let date = new Date(deadline);
+        let day = date.getDate();
+        let month = date.getMonth();
+        return `${day < 10 ? `0${day}` : `${day}`}.${month < 10 ? `0${month + 1}` : month + 1}`;
     }
     else {
         return deadline;
@@ -24,7 +26,7 @@ const Task = ({ task, onDelete, onToggle }) => {
             <div className="header-of-task"> {/*just header */}
                 <input type='checkbox' checked={task.done ? "checked" : ""} onChange={() => onToggle(task)} />
                 <h2>{task.title}</h2>
-                <h3 className={(isExpired(task.deadline) && !task.done) ? "expired-date" : ""}>{formatDate(task.deadline)}</h3>
+                <h3 className={(isExpired(task.duedate) && !task.done) ? "expired-date" : ""}>{formatDate(task.duedate)}</h3>
             </div>
             <div className="description-delete">
                 <p>{task.description}</p>
