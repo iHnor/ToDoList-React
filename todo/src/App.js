@@ -10,8 +10,8 @@ import {
 } from "react-router-dom";
 
 function App() {
-  const [listsState, setLists] = useState([]);
-  const listInDB = "http://localhost:3000/lists";
+  const [listsState, setLists] = useState({todayTasks: 0, unDoneList: [] });
+  const listInDB = "https://localhost:5001/dashboard";
 
   useEffect(() => {
     fetch(listInDB)
@@ -26,16 +26,16 @@ function App() {
   // }
   // const [showHide, setShowHide] = useState(showHideTasks);
 
-  function changeInDB(id, active) {
-    fetch(listInDB + '/' + id, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ active })
-    })
-      .then(response => response.json())
-  }
+  // function changeInDB(id, active) {
+  //   fetch(listInDB + '/' + id, {
+  //     method: 'PATCH',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({ active })
+  //   })
+  //     .then(response => response.json())
+  // }
 
   // function clickShowOnlyUndone(clickButton) {
   //   clickButton.title = clickButton.title === "Сховати виконані" ? "Показати всі" : "Сховати виконані";
@@ -44,18 +44,19 @@ function App() {
   //   setLists(listsState.slice(0))
   // }
 
-  function clickOnList(clickList) {
-    let activeList = listsState.find(l => l.active);
-    if (activeList) {
-      activeList.active = !activeList.active;
-      listsState.map(l => l.id === activeList.id ? activeList : l)
-      changeInDB(activeList.id, activeList.active)
-    }
-    clickList.active = !clickList.active;
-    listsState.map(l => l.id === clickList.id ? clickList : l)
-    changeInDB(clickList.id, clickList.active)
-    setLists(listsState)
-  }
+  // function clickOnList(clickList) {
+  //   console.log(listsState);
+  //   let activeList = listsState.find(l => l.active);
+  //   if (activeList) {
+  //     activeList.active = !activeList.active;
+  //     listsState.map(l => l.id === activeList.id ? activeList : l)
+  //     changeInDB(activeList.id, activeList.active)
+  //   }
+  //   clickList.active = !clickList.active;
+  //   listsState.map(l => l.id === clickList.id ? clickList : l)
+  //   changeInDB(clickList.id, clickList.active)
+  //   setLists(listsState)
+  // }
 
   return (
     <Router>
@@ -64,11 +65,11 @@ function App() {
         <main>
           <SideBar
             lists={listsState}
-            clickOnList={clickOnList}
+            // clickOnList={clickOnList}
           />
           <Routes>
             <Route path="todo-list/:id" element={<TaskListPage />} />
-            <Route path="/today" element={<TodayTasksPage />} />
+            {/* <Route path="/today" element={<TodayTasksPage />} /> */}
           </Routes>
         </main>
 
