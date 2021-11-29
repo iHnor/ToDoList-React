@@ -19,12 +19,12 @@ function App() {
       .then(res => setLists(res))
   }, [])
 
-  const showHideTasks =
-  {
-    title: "Сховати виконані",
-    click: false
-  }
-  const [showHide, setShowHide] = useState(showHideTasks);
+  // const showHideTasks =
+  // {
+  //   title: "Сховати виконані",
+  //   click: false
+  // }
+  // const [showHide, setShowHide] = useState(showHideTasks);
 
   function changeInDB(id, active) {
     fetch(listInDB + '/' + id, {
@@ -37,12 +37,12 @@ function App() {
       .then(response => response.json())
   }
 
-  function clickShowOnlyUndone(clickButton) {
-    clickButton.title = clickButton.title === "Сховати виконані" ? "Показати всі" : "Сховати виконані";
-    clickButton.click = !clickButton.click;
-    setShowHide(clickButton);
-    setLists(listsState.slice(0))
-  }
+  // function clickShowOnlyUndone(clickButton) {
+  //   clickButton.title = clickButton.title === "Сховати виконані" ? "Показати всі" : "Сховати виконані";
+  //   clickButton.click = !clickButton.click;
+  //   setShowHide(clickButton);
+  //   setLists(listsState.slice(0))
+  // }
 
   function clickOnList(clickList) {
     let activeList = listsState.find(l => l.active);
@@ -61,13 +61,12 @@ function App() {
     <Router>
       <div className="App">
         <h1>TodoList</h1>
-        <main className={showHide.click ? "hide-done" : ""}>
+        <main>
           <LeftBar
-            showHide={showHide}
-            clickShowOnlyUndone={clickShowOnlyUndone}
+            // showHide={showHide}
+            // clickShowOnlyUndone={clickShowOnlyUndone}
             lists={listsState}
             clickOnList={clickOnList}
-            // clickToday={clickToday}
           />
           <Routes>
             <Route path="todo-list/:id" element={<TaskListPage />} />

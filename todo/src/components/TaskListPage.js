@@ -59,11 +59,31 @@ function TaskListPage() {
     setTasks(changeTask)
   }
 
+  const showHideTasks =
+  {
+    title: "Сховати виконані",
+    click: false
+  }
+  const [showHide, setShowHide] = useState(showHideTasks);
+
+  function clickShowOnlyUndone(clickButton) {
+    clickButton.title = clickButton.title === "Сховати виконані" ? "Показати всі" : "Сховати виконані";
+    clickButton.click = !clickButton.click;
+    setShowHide(clickButton);
+    setTasks(tasksState.slice(0))
+
+  }
+
+  const visibleTasks = showHide.click ? tasksState : tasksState.filter(t => !t.done );
+  
   return (
 
     <div className="tasks">
+
       <Tasks
-        task={tasksState}
+        showHide={showHide}
+        clickShowOnlyUndone={clickShowOnlyUndone}
+        task={visibleTasks}
         onDelete={deleteTask}
         clickCheckBox={clickCheckBox}
       />
@@ -71,7 +91,7 @@ function TaskListPage() {
         <TaskForm onSubmit={addToDB} lists={activeList} />
       </div>
     </div>
-    
+
   );
 
 }
