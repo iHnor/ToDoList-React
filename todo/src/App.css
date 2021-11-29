@@ -125,3 +125,6 @@ form button {
 .active button{
     background-color: rgb(111, 175, 218);
 }
+.tasks{
+    width: 100%;
+}

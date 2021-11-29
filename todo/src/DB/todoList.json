@@ -19,7 +19,7 @@
     {
       "title": "Завдання на сьогодні ",
       "description": "",
-      "done": true,
+      "done": false,
       "deadline": "2021-11-26",
       "list": 1,
       "id": 3
@@ -53,7 +53,7 @@
     {
       "id": 1,
       "title": "First List",
-      "active": false
+      "active": true
     },
     {
       "id": 2,
@@ -63,7 +63,7 @@
     {
       "id": 3,
       "title": "Third List",
-      "active": true
+      "active": false
     }
   ]
 }

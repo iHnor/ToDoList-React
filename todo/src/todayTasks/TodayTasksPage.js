@@ -46,7 +46,7 @@ function TodayTasksPage() {
   }
   
   return (
-    <div>
+    <div className="tasks">
       <TasksToday
         task={today}
         lists={lists}

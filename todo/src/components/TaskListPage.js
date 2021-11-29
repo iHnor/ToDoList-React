@@ -6,7 +6,6 @@ import Tasks from './Tasks';
 function TaskListPage() {
   const [tasksState, setTasks] = useState([]);
   const activeList = useParams();
-  console.log(activeList);
   const taskInDB = "http://localhost:3000/tasks";
 
   useEffect(() => {
@@ -62,7 +61,7 @@ function TaskListPage() {
 
   return (
 
-    <div>
+    <div className="tasks">
       <Tasks
         task={tasksState}
         onDelete={deleteTask}
