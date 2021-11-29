@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from 'react-router-dom'
-const DescriptDelete = ({ task, onDelete, lists }) => {    
+const DescriptionDelete = ({ task, onDelete, lists }) => {    
     let title = '';
     let getTitle = lists.find(l => l.id === task.list);
     if(getTitle)
@@ -19,4 +19,4 @@ const DescriptDelete = ({ task, onDelete, lists }) => {
     )
 }
 
-export default DescriptDelete
+export default DescriptionDelete

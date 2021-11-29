@@ -11,7 +11,7 @@
     {
       "title": "Завдання з описом",
       "description": "Трішки опису до завдання",
-      "done": false,
+      "done": true,
       "deadline": "2021-11-25",
       "id": 2,
       "list": 2
@@ -27,7 +27,7 @@
     {
       "title": "Second List",
       "description": "New description",
-      "done": false,
+      "done": true,
       "deadline": "2021-11-17",
       "list": 2,
       "id": 5
@@ -43,22 +43,30 @@
     {
       "title": "One task for third list",
       "description": "",
-      "done": true,
+      "done": false,
       "deadline": "",
       "list": 3,
       "id": 7
+    },
+    {
+      "title": "New Task",
+      "description": "New description",
+      "done": false,
+      "deadline": "2021-11-29",
+      "list": 3,
+      "id": 8
     }
   ],
   "lists": [
     {
       "id": 1,
       "title": "First List",
-      "active": true
+      "active": false
     },
     {
       "id": 2,
       "title": "Second List",
-      "active": false
+      "active": true
     },
     {
       "id": 3,

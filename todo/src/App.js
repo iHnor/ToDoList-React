@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './App.css';
 import TaskListPage from './components/TaskListPage'
-import LeftBar from './components/LeftBar';
+import SideBar from './components/SideBar';
 import TodayTasksPage from './todayTasks/TodayTasksPage'
 import {
   BrowserRouter as Router,
@@ -62,9 +62,7 @@ function App() {
       <div className="App">
         <h1>TodoList</h1>
         <main>
-          <LeftBar
-            // showHide={showHide}
-            // clickShowOnlyUndone={clickShowOnlyUndone}
+          <SideBar
             lists={listsState}
             clickOnList={clickOnList}
           />

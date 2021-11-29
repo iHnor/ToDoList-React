@@ -6,18 +6,18 @@ import Tasks from './Tasks';
 function TaskListPage() {
   const [tasksState, setTasks] = useState([]);
   const activeList = useParams();
-  const taskInDB = "http://localhost:3000/tasks";
+  const tasksURL = "http://localhost:3000/tasks";
 
   useEffect(() => {
-    fetch(taskInDB)
+    fetch(tasksURL)
       .then(response => response.json())
       .then(res => setTasks(res.filter(r => r.list === Number(activeList.id))))
 
   }, [activeList.id])
 
 
-  function addToDB(newTask) {
-    return fetch(taskInDB, {
+  function createTask(newTask) {
+    return fetch(tasksURL, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'
@@ -27,15 +27,16 @@ function TaskListPage() {
       .then(response => response.json())
       .then(res => addToState(res))
   }
-  function deleteFromDB(task) {
-    fetch(taskInDB + '/' + task.id, {
+
+  function deleteTask(task) {
+    fetch(tasksURL + '/' + task.id, {
       method: 'DELETE'
     })
       .then(response => response.json())
   }
 
-  function changeInDB(id, done) {
-    fetch(taskInDB + '/' + id, {
+  function updateTask(id, done) {
+    fetch(tasksURL + '/' + id, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'
@@ -49,13 +50,13 @@ function TaskListPage() {
     setTasks([...tasksState, newTask])
   }
   function deleteTask(task) {
-    deleteFromDB(task);
+    deleteTask(task);
     setTasks(tasksState.filter(t => t !== task));
   }
-  function clickCheckBox(task) {
+  function toggleTask(task) {
     task.done = !task.done
     let changeTask = tasksState.map(t => t.id === task.id ? task : t);
-    changeInDB(task.id, task.done);
+    updateTask(task.id, task.done);
     setTasks(changeTask)
   }
 
@@ -74,21 +75,20 @@ function TaskListPage() {
 
   }
 
-  const visibleTasks = showHide.click ? tasksState : tasksState.filter(t => !t.done );
-  
+  const visibleTasks = showHide.click ? tasksState : tasksState.filter(t => !t.done);
+
   return (
 
     <div className="tasks">
-
       <Tasks
         showHide={showHide}
         clickShowOnlyUndone={clickShowOnlyUndone}
         task={visibleTasks}
         onDelete={deleteTask}
-        clickCheckBox={clickCheckBox}
+        onToggle={toggleTask}
       />
       <div className="footer">
-        <TaskForm onSubmit={addToDB} lists={activeList} />
+        <TaskForm onSubmit={createTask} lists={activeList} />
       </div>
     </div>
 
