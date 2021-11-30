@@ -36,7 +36,7 @@ function TaskListPage() {
   function toggleTask(task) {
     task.done = !task.done
     let changeTask = tasksState.map(t => t.id === task.id ? task : t);
-    Queries.updateTask(task.id, taskURL);
+    Queries.update(task.id, taskURL);
     setTasks(changeTask)
   }
   function clickShowOnlyUndone(clickButton) {

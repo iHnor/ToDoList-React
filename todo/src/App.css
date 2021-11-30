@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;400;600&display=swap');
+
 .task {
     align-self: center;
     border: 1.5px solid rgba(0, 0, 0, 0.3);
@@ -49,6 +51,7 @@
     margin-left: 100px;
     text-align: center;
     flex-basis: 150px;
+    padding-right: 50px;
 }
 
 .menu h3 {
@@ -70,10 +73,6 @@
     font-size: 15px;
     margin-top: 16px;
     padding: 10px;
-}
-
-.hide-done .done-task {
-    display: none;
 }
 
 form input {
@@ -122,16 +121,30 @@ form button {
     color: black;
 }
 
-.active button{
-    background-color: rgb(111, 175, 218);
+.active button {
+    background-color: #aadffe;
 }
-.tasks{
+
+.tasks {
     width: 100%;
     padding-right: 250px;
 }
-#hide-show{
+
+#hide-show {
     font-family: 'Source Code Pro';
     font-size: 12px;
     padding: 6px;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+.Today__link {
+    font-family: 'Source Code Pro';
+    text-decoration: none;
+    font-size: 14px;
+    color: rgb(43, 43, 43);
+}
+
+.Today__link:hover {
+    border-bottom: 1px solid;
+    background: #aadffe;
 }

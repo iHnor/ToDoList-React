@@ -2,11 +2,11 @@ import React from 'react'
 
 import TaskToday from './TaskToday';
 
-const TodayTasks = ({ task, lists, onDelete, clickCheckBox }) => {
+const TodayTasks = ({ today, onDelete, clickCheckBox }) => {
     return (
         <section id="tasks">
             {
-                task.map((t, id) => <TaskToday key={id} task={t} lists={lists} onDelete={onDelete} clickCheckBox={clickCheckBox} />)
+                today.map((t, id) => <TaskToday key={id} today={t} onDelete={onDelete} clickCheckBox={clickCheckBox} />)
             }
         </section>
     )

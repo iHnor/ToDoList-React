@@ -17,7 +17,7 @@ class QueriesRestApi {
         })
     }
 
-    updateTask(id, URL) {
+    update(id, URL) {
         fetch(URL + '/' + id, {
             method: 'PATCH',
         })

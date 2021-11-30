@@ -28,7 +28,7 @@ function App() {
           />
           <Routes>
             <Route path="todo-list/:id" element={<TaskListPage />} />
-            {/* <Route path="/today" element={<TodayTasksPage />} /> */}
+            <Route path="/today" element={<TodayTasksPage />} />
           </Routes>
         </main>
 
