@@ -18,45 +18,6 @@ function App() {
       .then(response => response.json())
       .then(res => setLists(res))
   }, [])
-  // const showHideTasks =
-  // {
-  //   title: "Сховати виконані",
-  //   click: false
-  // }
-  // const [showHide, setShowHide] = useState(showHideTasks);
-
-  // function changeInDB(id, active) {
-  //   fetch(listInDB + '/' + id, {
-  //     method: 'PATCH',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify({ active })
-  //   })
-  //     .then(response => response.json())
-  // }
-
-  // function clickShowOnlyUndone(clickButton) {
-  //   clickButton.title = clickButton.title === "Сховати виконані" ? "Показати всі" : "Сховати виконані";
-  //   clickButton.click = !clickButton.click;
-  //   setShowHide(clickButton);
-  //   setLists(listsState.slice(0))
-  // }
-
-  // function clickOnList(clickList) {
-  //   console.log(listsState);
-  //   let activeList = listsState.find(l => l.active);
-  //   if (activeList) {
-  //     activeList.active = !activeList.active;
-  //     listsState.map(l => l.id === activeList.id ? activeList : l)
-  //     changeInDB(activeList.id, activeList.active)
-  //   }
-  //   clickList.active = !clickList.active;
-  //   listsState.map(l => l.id === clickList.id ? clickList : l)
-  //   changeInDB(clickList.id, clickList.active)
-  //   setLists(listsState)
-  // }
-
   return (
     <Router>
       <div className="App">
@@ -64,7 +25,6 @@ function App() {
         <main>
           <SideBar
             lists={listsState}
-            // clickOnList={clickOnList}
           />
           <Routes>
             <Route path="todo-list/:id" element={<TaskListPage />} />

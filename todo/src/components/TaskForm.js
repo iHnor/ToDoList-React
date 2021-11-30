@@ -10,9 +10,9 @@ class TaskForm extends Component {
         this.props.onSubmit({
             title: contact.title,
             description: contact.description,
+            duedate: contact.deadline,
             done: false,
-            duedate: new Date(contact.deadline),
-            todoListId: Number(this.props.lists.id)
+            todoListId: this.props.lists.id
         })
         event.target.reset()
     }
@@ -22,7 +22,7 @@ class TaskForm extends Component {
             <form name="task" autoComplete="off" onSubmit={this.onSubmitHandler}>
                 <input type="text" name="title" placeholder="Title" />
                 <input type="text" name="description" placeholder="Description" />
-                <input type="date" name="deadline" placeholder="Date" />
+                <input type="date" name="deadline" placeholder="Date" required/>
                 <button type="submit">Add</button>
             </form>
         )
