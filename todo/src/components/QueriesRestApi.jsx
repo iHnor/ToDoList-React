@@ -15,6 +15,7 @@ class QueriesRestApi {
             },
             body: JSON.stringify(newTask)
         })
+        .then(res => res.json())
     }
 
     update(id, URL) {
