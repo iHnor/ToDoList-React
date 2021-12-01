@@ -19,6 +19,9 @@ function isExpired(date) {
 
 
 const Task = ({ today, onDelete, clickCheckBox }) => {
+
+    
+
     return (
         <div className="task" id="1" >
             <div className="header-of-task">

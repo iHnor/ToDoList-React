@@ -1,6 +1,7 @@
-import { TASKS_LOADED, TASK_UPDATE_DONE, TASK_CREATED, TASKS_DELETE } from "./types"
+import { TASKS_LOADED, TASK_UPDATE_DONE, TASK_CREATED, TASKS_DELETE, TODAY_LOADED } from "./types"
 const listsURL = "https://localhost:5001/list";
 const taskURL = "https://localhost:5001/task";
+const todayTasks = "https://localhost:5001/today";
 
 export const loadTasks = id => dispatch => {
     fetch(listsURL + "/" + id)
@@ -29,19 +30,28 @@ export const createTask = newTask => dispatch => {
         },
         body: JSON.stringify(newTask)
     })
-    .then(res => res.json())
-    .then(task => dispatch({
-        type: TASK_CREATED,
-        payload: task
-    }))
+        .then(res => res.json())
+        .then(task => dispatch({
+            type: TASK_CREATED,
+            payload: task
+        }))
 }
 
 export const removeTask = task => dispatch => {
     fetch(taskURL + '/' + task.id, {
         method: 'DELETE'
     })
-    .then(_ => dispatch({
-        type: TASKS_DELETE,
-        payload: task
-    }))
+        .then(_ => dispatch({
+            type: TASKS_DELETE,
+            payload: task
+        }))
+}
+
+export const loadTodayTasks = dispatch => {
+    fetch(todayTasks)
+      .then(response => response.json())
+      .then(res => dispatch({
+          type: TODAY_LOADED,
+          payload: res
+      }))
 }
