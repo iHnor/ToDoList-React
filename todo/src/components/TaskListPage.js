@@ -3,8 +3,8 @@ import { useParams } from 'react-router';
 import TaskForm from './TaskForm';
 import Tasks from './Tasks';
 import QueriesRestApi from './QueriesRestApi'
-// import { useDispatch, useSelector } from 'react-redux';
-// import { loadTasks } from '../store/tasks/actions'
+import { useDispatch, useSelector } from 'react-redux';
+import { doneTask } from '../store/tasks/actions'
 
 function TaskListPage() {
   const activeList = useParams();
@@ -13,7 +13,7 @@ function TaskListPage() {
   const taskAPI = new QueriesRestApi();
   const [showHide, setShowHide] = useState({ title: "Сховати виконані", click: false });
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const tasks = useSelector(state => state.tasks);
   // useEffect(() => {
   //   // fetch(listURL + "/" + activeList.id)
@@ -22,8 +22,10 @@ function TaskListPage() {
   //   dispatch(loadTasks(activeList.id))
   // }, [activeList.id])
 
-  function addToState(newTask) {
-    taskAPI.create(newTask, taskURL)
+  function addTask(newTask) {
+    console.log(newTask);
+
+    // taskAPI.create(newTask, taskURL)
     // .then(res => setTasks([...tasks, res]))
   }
   function deleteInStage(task) {
@@ -32,8 +34,12 @@ function TaskListPage() {
   }
   function toggleTask(task) {
     task.done = !task.done
+    // console.log(task.id);
+    dispatch(doneTask(task))
+    
+
     // let changeTask = tasks.map(t => t.id === task.id ? task : t);
-    taskAPI.update(task.id, taskURL);
+    // taskAPI.update(task.id, taskURL);
     // setTasks(changeTask)
   }
   function clickShowOnlyUndone(clickButton) {
@@ -42,20 +48,19 @@ function TaskListPage() {
     setShowHide(clickButton);
     // setTasks(tasks.slice(0))
   }
-
-  // console.log(visibleTasks);
+  const tmp = useSelector(state => state.tasks);
+  console.log(tmp);
   return (
     <div className="tasks">
       <Tasks
         showHide={showHide}
         clickShowOnlyUndone={clickShowOnlyUndone}
-        listId={activeList}
         onDelete={deleteInStage}
         onToggle={toggleTask}
       />
-       <div className="footer">
-        <TaskForm onSubmit={addToState} lists={activeList} />
-      </div> 
+      <div className="footer">
+        <TaskForm onSubmit={addTask} lists={activeList} />
+      </div>
     </div>
   );
 
